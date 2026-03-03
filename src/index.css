@@ -3,66 +3,75 @@
 @tailwind utilities;
 
 @layer base {
-  /* inter var - latin */
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 100 900;
-    font-display: block;
-    src: url('/fonts/inter-var-latin.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-      U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .cursor-newtab {
-    cursor:
-      url('/images/new-tab.png') 10 10,
-      pointer;
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* #region  /**=========== Typography =========== */
-  .h0 {
-    @apply text-3xl font-bold md:text-5xl;
+  body {
+    font-family:
+      'Plus Jakarta Sans',
+      system-ui,
+      -apple-system,
+      sans-serif;
+    color: #0f172a;
+    background-color: #f8fafc;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
   }
 
-  h1,
-  .h1 {
-    @apply text-2xl font-bold md:text-4xl;
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+@layer components {
+  .mobile-shell {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    background-color: #f8fafc;
+    max-width: 430px;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
-  h2,
-  .h2 {
-    @apply text-xl font-bold md:text-3xl;
+  .page-container {
+    padding: 1.25rem 1.25rem 10rem;
   }
 
-  h3,
-  .h3 {
-    @apply text-lg font-bold md:text-2xl;
+  .card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
   }
 
-  h4,
-  .h4 {
-    @apply text-base font-bold md:text-lg;
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: #f1f5f9;
+    color: #64748b;
   }
 
-  body,
-  .p {
-    @apply text-sm md:text-base;
-  }
-  /* #endregion  /**======== Typography =========== */
-
-  .layout {
-    /* 1100px */
-    max-width: 68.75rem;
-    @apply mx-auto w-11/12;
-  }
-
-  .bg-dark a.custom-link {
-    @apply border-gray-200 hover:border-gray-200/0;
-  }
-
-  /* Class to adjust with sticky footer */
-  .min-h-main {
-    @apply min-h-[calc(100vh-56px)];
+  .tag-accent {
+    background-color: #dbeafe;
+    color: #2563eb;
   }
 }
