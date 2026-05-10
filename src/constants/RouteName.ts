@@ -1,7 +1,8 @@
 const NavbarRouteName = {
-  PROFILE: '/profile',
   HOME: '/',
-  ABOUT: '/about'
+  MOMENTS: '/moments',
+  FAVORITES: '/favorites',
+  WISHES: '/wishes'
 }
 
 const RouteName = {
