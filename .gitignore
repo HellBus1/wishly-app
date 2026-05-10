@@ -25,3 +25,11 @@ dist-ssr
 .agent/*
 .agents/*
 skills-lock.json
+
+# Private Assets
+public/private/*
+!public/private/.gitkeep
+public/photos/*
+!public/photos/.gitkeep
+stitch_for_sevil_digital_scrapbook/*
+phase 1/*
