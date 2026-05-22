@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Image as ImageIcon } from 'lucide-react'
 import { useContent } from '@/contexts/useContent'
 
 const SectionTimeline = () => {
@@ -42,7 +41,8 @@ const SectionTimeline = () => {
                   <div className='editorial-card p-4 pb-6'>
                     {/* Image Placeholder */}
                     <div className='w-full aspect-[4/3] bg-[#F5F5F5] mb-6 flex items-center justify-center border border-line'>
-                      <ImageIcon className='w-8 h-8 text-line' />
+                      {/* <ImageIcon className='w-8 h-8 text-line' /> */}
+                      <img src={moment.imageSrc} />
                     </div>
 
                     <div className='px-2'>

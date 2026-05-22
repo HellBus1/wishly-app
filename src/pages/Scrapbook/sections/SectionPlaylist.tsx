@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion'
-import { Disc3, Music2 } from 'lucide-react'
+import { Music2, PauseCircle, PlayCircle } from 'lucide-react'
 import { useContent } from '@/contexts/useContent'
+import { usePlayer } from './hooks/use-player'
 
 const SectionPlaylist = () => {
   const { content } = useContent()
   const playlist = content?.scrapbook?.playlist
+  const currentTrack = content?.music[0]?.src || ''
+  const { isPlaying, handlePlayPause, audioRef } = usePlayer()
 
   if (!playlist) return null
 
@@ -26,9 +29,16 @@ const SectionPlaylist = () => {
       {/* Hero Track Card */}
       <div className='editorial-card p-6 md:p-8 flex items-center gap-6 relative overflow-hidden group'>
         <div className='absolute inset-0 bg-dusty-rose/5 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-out' />
-
-        <div className='relative z-10 w-20 h-20 md:w-24 md:h-24 rounded-full bg-ink flex items-center justify-center shrink-0 shadow-lg'>
-          <Disc3 className='w-12 h-12 text-offwhite animate-[spin_4s_linear_infinite]' />
+        <audio ref={audioRef} src={currentTrack} preload='auto' />
+        <div
+          className='relative z-10 w-20 h-20 md:w-24 md:h-24 rounded-full bg-ink flex items-center justify-center shrink-0 shadow-lg cursor-pointer'
+          onClick={handlePlayPause}
+        >
+          {isPlaying ? (
+            <PauseCircle className='w-12 h-12 text-offwhite' onClick={handlePlayPause} />
+          ) : (
+            <PlayCircle className='w-12 h-12 text-offwhite' onClick={handlePlayPause} />
+          )}
           <div className='absolute inset-0 rounded-full border-4 border-dusty-rose/20 animate-ping' />
         </div>
 
