@@ -11,7 +11,7 @@ const Wrapped = () => {
   const [hasStarted, setHasStarted] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const navigate = useNavigate()
-  const { isPlaying, handlePlayPause, play } = usePlayer()
+  const { isPlaying, handlePlayPause, play, currentTrackMeta } = usePlayer()
 
   if (loading || !content) {
     return (
@@ -22,7 +22,6 @@ const Wrapped = () => {
   }
 
   const wrappedCards = content.wrapped
-  const music = content.music?.[0]
 
   const handleStart = async () => {
     setHasStarted(true)
@@ -94,7 +93,7 @@ const Wrapped = () => {
             Now Playing
           </p>
           <p className='text-xs font-serif text-ink truncate max-w-[120px] leading-tight'>
-            {music?.title || 'Unknown'}
+            {currentTrackMeta?.title || 'Unknown'}
           </p>
         </div>
       </motion.div>

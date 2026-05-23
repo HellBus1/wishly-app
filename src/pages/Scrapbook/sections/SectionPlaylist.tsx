@@ -6,9 +6,12 @@ import { usePlayer } from '@/contexts/usePlayer'
 const SectionPlaylist = () => {
   const { content } = useContent()
   const playlist = content?.scrapbook?.playlist
-  const { isPlaying, handlePlayPause } = usePlayer()
+  const { isPlaying, handlePlayPause, currentTrackMeta, changeTrack } = usePlayer()
 
   if (!playlist) return null
+
+  const displayTitle = currentTrackMeta?.title || playlist.hero.title
+  const displayArtist = currentTrackMeta?.artist || playlist.hero.artist
 
   return (
     <motion.section
@@ -44,20 +47,28 @@ const SectionPlaylist = () => {
           <p className='text-xs uppercase tracking-widest text-dusty-rose font-semibold mb-1'>
             Now Playing
           </p>
-          <h3 className='font-serif text-2xl md:text-3xl truncate mb-1'>{playlist.hero.title}</h3>
-          <p className='text-slate mb-3 truncate'>{playlist.hero.artist}</p>
-          <p className='text-xs text-ink/70 italic hidden md:block border-l-2 border-line pl-3'>
-            "{playlist.hero.note}"
-          </p>
+          <h3 className='font-serif text-2xl md:text-3xl truncate mb-1'>{displayTitle}</h3>
+          <p className='text-slate mb-3 truncate'>{displayArtist}</p>
+          {displayTitle === playlist.hero.title && (
+            <p className='text-xs text-ink/70 italic hidden md:block border-l-2 border-line pl-3'>
+              "{playlist.hero.note}"
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Companion Tracks */}
+      {/* Companion Tracks & Hero track */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-        {playlist.companions.map((song, idx) => (
-          <div key={idx} className='border border-line p-4 flex items-center gap-4 bg-white/50'>
+        {[playlist.hero, ...playlist.companions].map((song, idx) => (
+          <div
+            key={idx}
+            className={`border p-4 flex items-center gap-4 cursor-pointer hover:bg-dusty-rose/10 transition-colors ${currentTrackMeta?.src === song.src ? 'border-dusty-rose bg-dusty-rose/5' : 'border-line bg-white/50'}`}
+            onClick={() => song.src && changeTrack(song.src, song.title, song.artist)}
+          >
             <div className='w-10 h-10 bg-[#F5F5F5] flex items-center justify-center shrink-0'>
-              <Music2 className='w-4 h-4 text-slate' />
+              <Music2
+                className={`w-4 h-4 ${currentTrackMeta?.src === song.src ? 'text-dusty-rose' : 'text-slate'}`}
+              />
             </div>
             <div className='min-w-0'>
               <p className='font-serif text-sm truncate'>{song.title}</p>
