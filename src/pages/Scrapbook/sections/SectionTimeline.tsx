@@ -40,9 +40,8 @@ const SectionTimeline = () => {
                 <div className={`w-full md:w-1/2 ${isEven ? 'md:pl-12' : 'md:pr-12'}`}>
                   <div className='editorial-card p-4 pb-6'>
                     {/* Image Placeholder */}
-                    <div className='w-full aspect-[4/3] bg-[#F5F5F5] mb-6 flex items-center justify-center border border-line'>
-                      {/* <ImageIcon className='w-8 h-8 text-line' /> */}
-                      <img src={moment.imageSrc} />
+                    <div className='w-full aspect-[4/5] bg-[#F5F5F5] mb-6 flex items-center justify-center border border-line overflow-hidden'>
+                      <img src={moment.imageSrc} className='w-full h-full object-cover' />
                     </div>
 
                     <div className='px-2'>
