@@ -19,11 +19,13 @@ export interface PlaylistHero {
   title: string
   artist: string
   note: string
+  src?: string
 }
 
 export interface PlaylistCompanion {
   title: string
   artist: string
+  src?: string
 }
 
 export interface TimelineMoment {

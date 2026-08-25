@@ -1,16 +1,17 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Disc3 } from 'lucide-react'
+import { Disc3, PauseCircle, PlayCircle } from 'lucide-react'
 import { useContent } from '@/contexts/useContent'
 import Nav from '@/components/Nav/Nav'
+import { usePlayer } from '@/contexts/usePlayer'
 
 const Wrapped = () => {
   const { content, loading } = useContent()
   const [hasStarted, setHasStarted] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const navigate = useNavigate()
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const { isPlaying, handlePlayPause, play, currentTrackMeta } = usePlayer()
 
   if (loading || !content) {
     return (
@@ -21,13 +22,10 @@ const Wrapped = () => {
   }
 
   const wrappedCards = content.wrapped
-  const music = content.music?.[0]
 
-  const handleStart = () => {
+  const handleStart = async () => {
     setHasStarted(true)
-    if (audioRef.current) {
-      audioRef.current.play().catch((e) => console.warn('Audio playback failed', e))
-    }
+    play()
   }
 
   const handleNext = () => {
@@ -40,27 +38,28 @@ const Wrapped = () => {
 
   if (!hasStarted) {
     return (
-      <div
-        className='fixed inset-0 bg-offwhite flex items-center justify-center p-6 cursor-pointer'
-        onClick={handleStart}
-      >
-        <Nav />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className='text-center'
+      <>
+        <div
+          className='fixed inset-0 bg-offwhite flex items-center justify-center p-6 cursor-pointer'
+          onClick={handleStart}
         >
-          <div className='w-24 h-24 mx-auto mb-8 rounded-full bg-ink flex items-center justify-center shadow-lg relative'>
-            <Disc3 className='w-12 h-12 text-offwhite animate-[spin_4s_linear_infinite]' />
-            <div className='absolute inset-0 rounded-full border-4 border-dusty-rose/20 animate-ping' />
-          </div>
-          <h1 className='text-3xl font-serif text-ink mb-4'>A Year in Review</h1>
-          <p className='text-slate font-sans tracking-widest uppercase text-xs'>
-            Tap anywhere to begin
-          </p>
-        </motion.div>
-        {music && <audio ref={audioRef} src={music.src} loop />}
-      </div>
+          <Nav />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='text-center'
+          >
+            <div className='w-24 h-24 mx-auto mb-8 rounded-full bg-ink flex items-center justify-center shadow-lg relative'>
+              <Disc3 className='w-12 h-12 text-offwhite animate-[spin_4s_linear_infinite]' />
+              <div className='absolute inset-0 rounded-full border-4 border-dusty-rose/20 animate-ping' />
+            </div>
+            <h1 className='text-3xl font-serif text-ink mb-4'>A Year in Review</h1>
+            <p className='text-slate font-sans tracking-widest uppercase text-xs'>
+              Tap anywhere to begin
+            </p>
+          </motion.div>
+        </div>
+      </>
     )
   }
 
@@ -73,7 +72,6 @@ const Wrapped = () => {
       onClick={handleNext}
     >
       <Nav />
-      {music && <audio ref={audioRef} src={music.src} loop />}
 
       {/* Vinyl Disc Player UI */}
       <motion.div
@@ -83,14 +81,19 @@ const Wrapped = () => {
         className='absolute top-6 right-6 flex items-center gap-3 bg-white/80 backdrop-blur px-4 py-2 rounded-full border border-line z-50 shadow-sm'
       >
         <div className='w-8 h-8 rounded-full bg-ink flex items-center justify-center shadow-sm'>
-          <Disc3 className='w-4 h-4 text-offwhite animate-[spin_4s_linear_infinite]' />
+          {/* <Disc3 className='w-4 h-4 text-offwhite animate-[spin_4s_linear_infinite]' /> */}
+          {isPlaying ? (
+            <PauseCircle className='w-12 h-12 text-offwhite' onClick={handlePlayPause} />
+          ) : (
+            <PlayCircle className='w-12 h-12 text-offwhite' onClick={handlePlayPause} />
+          )}
         </div>
         <div className='hidden sm:block'>
           <p className='text-[10px] uppercase tracking-widest text-dusty-rose font-semibold leading-none mb-0.5'>
             Now Playing
           </p>
           <p className='text-xs font-serif text-ink truncate max-w-[120px] leading-tight'>
-            {music?.title || 'Unknown'}
+            {currentTrackMeta?.title || 'Unknown'}
           </p>
         </div>
       </motion.div>

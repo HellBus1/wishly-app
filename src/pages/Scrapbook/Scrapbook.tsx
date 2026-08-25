@@ -4,7 +4,6 @@ import SectionPlaylist from './sections/SectionPlaylist'
 import SectionTimeline from './sections/SectionTimeline'
 import SectionMagic from './sections/SectionMagic'
 import SectionLetters from './sections/SectionLetters'
-import SectionMuseum from './sections/SectionMuseum'
 import SectionClosing from './sections/SectionClosing'
 import Nav from '@/components/Nav/Nav'
 
@@ -24,7 +23,6 @@ const Scrapbook = () => {
         <SectionTimeline />
         <SectionMagic />
         <SectionLetters />
-        <SectionMuseum />
       </div>
 
       {/* Full bleed closing */}

@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { BookOpen, Play, ArrowLeft } from 'lucide-react'
+import { usePlayer } from '@/contexts/usePlayer'
 
 interface NavItem {
   label: string
@@ -16,6 +17,7 @@ const navItems: NavItem[] = [
 const Nav = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { isPlaying, handlePlayPause } = usePlayer()
 
   return (
     <motion.nav
@@ -49,6 +51,32 @@ const Nav = () => {
             </button>
           )
         })}
+
+        <div className='w-px h-4 bg-line mx-1' />
+
+        <button
+          onClick={handlePlayPause}
+          className='flex items-center justify-center w-8 h-8 rounded-full hover:bg-slate/10 transition-colors group'
+          aria-label={isPlaying ? 'Pause music' : 'Play music'}
+        >
+          <div className='flex items-end justify-center gap-0.5 h-3.5 w-4'>
+            <motion.div
+              animate={{ height: isPlaying ? [4, 12, 4] : 4 }}
+              transition={{ repeat: Infinity, duration: 0.8, ease: 'easeInOut' }}
+              className={`w-[3px] rounded-full transition-colors ${isPlaying ? 'bg-dusty-rose' : 'bg-slate group-hover:bg-ink'}`}
+            />
+            <motion.div
+              animate={{ height: isPlaying ? [12, 6, 12] : 6 }}
+              transition={{ repeat: Infinity, duration: 0.9, ease: 'easeInOut', delay: 0.2 }}
+              className={`w-[3px] rounded-full transition-colors ${isPlaying ? 'bg-dusty-rose' : 'bg-slate group-hover:bg-ink'}`}
+            />
+            <motion.div
+              animate={{ height: isPlaying ? [6, 14, 6] : 10 }}
+              transition={{ repeat: Infinity, duration: 1.0, ease: 'easeInOut', delay: 0.4 }}
+              className={`w-[3px] rounded-full transition-colors ${isPlaying ? 'bg-dusty-rose' : 'bg-slate group-hover:bg-ink'}`}
+            />
+          </div>
+        </button>
       </div>
     </motion.nav>
   )
