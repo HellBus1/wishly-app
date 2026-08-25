@@ -1,66 +1,177 @@
-# Lightweight React JS + Vite Starter Kit Template
+# Wishly — Time of My Life 💌
 
-<https://github.com/user-attachments/assets/2ee04f33-57dd-42d0-80d7-bc173aa76b2e>
+> A deeply personal digital scrapbook and birthday experience, built with love.
 
-<div align="center">
-  <!-- <img alt="GitHub release" src="https://img.shields.io/github/v/release//HellBus1/ts-react-tailwind-starter?include_prereleases"> -->
-  <img alt="GitHub react version" src="https://img.shields.io/github/package-json/dependency-version/HellBus1/ts-react-tailwind-starter/react?style=flat">
-</div>
+---
 
-## Description
+## What Is This?
 
-A React.js template with Vite ⚡ is super simple and ready to go. It comes packed with all the essential libraries you need for modern frontend development.
+This is a private web application — a handcrafted digital keepsake for my girlfriend birthday on **July, 2026**. It is not a template or a generic project. Every word, lyric, and memory inside was written specifically for her.
 
-### Why Vite?
+The app has two main experiences:
 
-Here is several things that made vite is better bundler out there :
+| Experience | Route | Description |
+|---|---|---|
+| **Wrapped for my girlfriend** | `/` | A Spotify Wrapped–style interactive sequence of animated cards, each revealing a memory, stat, or feeling. Plays music as she taps through. |
+| **Time of My Life** | `/scrapbook` | A 7-section editorial scrapbook — a full digital zine with a timeline, letters, museum of artifacts, and a closing tribute. |
 
-1. **Instant Server Start**: No more waiting around—start your server instantly.
-2. **Lightning Fast HMR**: Hot Module Replacement that's truly fast.
-3. **Create React App Best Alternative**: Skip the unecessary clutter of Create React App 🙂.
-4. **And More**: There are plenty of other reasons to love Vite!
+---
 
-If you’re curious to explore Vite further, check out the [link](https://vitejs.dev/)
+## Design System
 
-## Features
+Inspired by *Kinfolk* magazine — minimal, editorial, intentional.
 
-Here is the building blocks of this repository
+| Token | Value |
+|---|---|
+| Background | `#FAF9F6` Off-White |
+| Text | `#1A1A1A` Ink |
+| Accent | `#C9967A` Dusty Rose |
+| Gold | `#C4A882` Warm Gold |
+| Serif Font | Playfair Display |
+| Sans Font | Inter |
 
-- 📟 **Navigation**: Configured with [React Router DOM](https://reactrouter.com/en/main) for dynamic routing.
-- 🔋 **CSS Frameworks**: [Tailwind CSS](https://tailwindcss.com/) and [Daisy UI](https://daisyui.com/) for rapid UI development with minimal custom styling.
-- 📊 **Code Formatting**: [Prettier](https://prettier.io/) is integrated to ensure consistent code style across the project.
-- 🗂️ **Linting**: [ESLint](https://eslint.org/) is set up to enforce coding standards and best practices.
-- 📮 **Pre-commit Hooks**: [Husky](https://github.com/lint-staged/lint-staged) is utilized to run automated checks before code is committed.
-- 🛠️ **Lint-Staged**: Paired with Husky, [lint-staged](https://github.com/lint-staged/lint-staged) handles formatting and linting for all staged changes.
+---
+
+## Tech Stack
+
+- **React 18** + **TypeScript** — component architecture
+- **Vite** — instant dev server & build
+- **Tailwind CSS** — utility styling
+- **Framer Motion** — all animations (Wrapped sequence, section fade-ins)
+- **Lucide React** — icons
+- **React Router v6** — routing between Wrapped and Scrapbook
+
+---
+
+## Project Structure
+
+```
+wishly-app/
+├── public/
+│   └── private/          # ← YOUR PRIVATE ASSETS GO HERE (git-ignored)
+│       ├── .gitkeep
+│       ├── content.json  # All the text, memories, letters etc.
+│       ├── music/        # Drop your .mp3 files here
+│       └── photos/       # Drop your photos here
+│
+├── src/
+│   ├── components/
+│   │   └── Nav/          # Top navigation (Wrapped ↔ Scrapbook)
+│   ├── contexts/
+│   │   ├── ContentContext.tsx  # Fetches & provides content.json
+│   │   └── useContent.ts       # Hook to consume the context
+│   └── pages/
+│       ├── Wrapped/      # The intro sequence
+│       └── Scrapbook/    # The 7-section scrapbook
+│           └── sections/ # Each section as its own component
+│
+├── phase 1/
+│   ├── PRD.md            # Product Requirements Document
+│   └── PRD.pdf           # PDF export
+```
+
+---
 
 ## Getting Started
 
-1. **Clone the repository** :
-```shell
-git clone https://github.com/HellBus1/ts-react-tailwind-starter.git
-cd ts-react-tailwind-starter
-```
+### 1. Clone & Install
 
-2. **Install dependencies** :
-```shell
+```sh
+git clone https://github.com/HellBus1/wishly-app.git
+cd wishly-app
 npm install
 ```
 
-3. **Run the development server** :
-```shell
+### 2. Add Your Private Content
+
+The `public/private/` folder is **git-ignored** — this is where all your personal content lives:
+
+```sh
+# The folder structure to create:
+public/private/
+├── content.json    # Copy from the template below
+├── music/
+│   └── your-song.mp3
+└── photos/
+    └── your-photo.jpg
+```
+
+**`content.json` structure:**
+```json
+{
+  "music": [{ "title": "Song Name", "artist": "Artist", "src": "/private/music/your-song.mp3" }],
+  "wrapped": [ /* array of { id, subtitle, title, description } */ ],
+  "scrapbook": { /* see full schema in src/contexts/ContentContext.tsx */ }
+}
+```
+
+### 3. Run Locally
+
+```sh
 npm run dev
 ```
 
-4. **Build for production** :
-```shell
+Open [http://localhost:5173](http://localhost:5173)
+
+### 4. Build for Production
+
+```sh
 npm run build
 ```
 
-## Getting Started
+Deploy the `dist/` folder to **Vercel**, **Netlify**, or **GitHub Pages**.
 
-Contributions are welcome! Please open an issue or submit a pull request.
+> ⚠️ **Important:** When deploying, do NOT commit `public/private/`. Instead, upload those files manually to the hosting service's file storage, or configure a private CDN.
 
-## Supports Me
-Want to see more free, high-quality code and articles? Buy me a coffee and make it happen! 
+---
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/syubban)
+## Available Scripts
+
+| Script | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Auto-fix lint errors |
+| `npm run format` | Run Prettier |
+
+---
+
+## How to Customize the Content
+
+All content lives in `public/private/content.json`. The structure is:
+
+- **`music[]`** — tracks that play during the Wrapped sequence
+- **`wrapped[]`** — the cards in the Wrapped sequence (subtitle, title, description)
+- **`scrapbook.timeline[]`** — your shared memories (add `imageSrc` to use real photos)
+- **`scrapbook.letters[]`** — the expandable letter bodies
+- **`scrapbook.museum[]`** — the artifact captions and era tags
+- **`scrapbook.magic[]`** — the 20 "ordinary magic" items
+- **`scrapbook.closing`** — the final section's gratefuls, protects, and promise
+
+---
+
+## Adding Photos to the Timeline
+
+In `content.json`, add an `imageSrc` field to any timeline moment:
+
+```json
+{
+  "id": 1,
+  "title": "The First Hello",
+  "date": "August 2024",
+  "feeling": "Butterflies",
+  "lyric": "I didn't know I was looking for you until I found you.",
+  "imageSrc": "/private/photos/first-hello.jpg"
+}
+```
+
+---
+
+## License
+
+This project is personal and not intended for redistribution. The base template is MIT-licensed from [HellBus1/ts-react-tailwind-starter](https://github.com/HellBus1/ts-react-tailwind-starter).
+
+---
+
+*Made with love. Happy Birthday. 💌*
